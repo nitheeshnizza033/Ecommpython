@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+
+    welocome to shopper stop you can buy what do you want..
+{% endblock %}
+<br>
+{% block content %}
+<div>
+    <p class="text-center my_search_text">your'search result<i>"{{query}}"</i></p>
+</div>
+<div class="container">
+    <div class="row mx_auto">
+        {% for Product in Product %}<br>
+        <div class="my_bottom_margin col-9 col-sm-12 col-md-4 col-md-12 col-lg-4">
+            <div class="card text-center" style="min-width:18rem;">
+                <a href="{{Product.get_url}}"><img class="card-img-top my_image" src="{{Product.image.url}}"alt="{{Product.name}}"> </a>
+                <div class="card-body">
+                    <h4>{{Product.name}}</h4>
+                        <p>{{Product.price}}</p>
+                </div>
+            </div>
+            <br>
+        </div>
+    {% empty %}
+        <div class="row mx-auto ">
+            <p class="text-center my_search_text"> 0 results found</p>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

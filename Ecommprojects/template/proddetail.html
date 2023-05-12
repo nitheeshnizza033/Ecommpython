@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+
+    {{Product.desc|truncatewords:155}}
+
+{% endblock %}
+{% block title %}
+ {% if Category %}
+    {{Product.name}}-Shopper Stop
+{% endif %}
+{% endblock %}
+{% block content %}
+<div class="row my_prod_row_class">
+    <div class="mx_auto">
+    <div>
+        <p> <a href="{% url 'Ecartshop:AllProductcat' %}">Home ||<a href="{{Product.Category.get_url}}"> {{Product.Category}}</a></a> </p>
+
+    </div>
+      <div style="color:#4A235A;" class="container">
+</div>
+    </div>
+
+<br><br>
+
+<div class="container">
+<br>
+<div class="row">
+    <div class="col-md-12 col-sm-4 col-md-12 col-lg-4 text-center">
+        <div class="style=min-width:18rem">
+                <img src="{{Product.image.url}}" alt={{Product.name}} width="250" height="250">
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-4 col-md-12 col-lg-4">
+        <div class= "text-justify">
+            <p>{{Product.name}}</p>
+            <h4>₹:{{Product.price}}</h4>
+            <u><b>Product Description</b></u>
+             <p>{{Product.desc}}</p>
+            {% if Product.stock <= 0 %}
+             <h4 style="color:red;">Out Of Stock</h4>
+            {% else %}
+            <p>  <a class="btn btn-secondary" href="{%  url 'cart:add_cart' Product.id %}">Add to cart</a>
+                <a class="btn btn-warning" href="/">Buy Now</a> </p>
+
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+    {% endblock %}
+</div>
+</div>

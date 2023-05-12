@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+ {% if Category %}
+    {{Category.desc|truncatewords:155}}
+{% else %}
+    welocome to shopper stop you can buy what do you want..
+{% endif %}
+{% endblock %}
+{% block title %}
+ {% if Category %}
+    {{Category.name}}-Shopper Stop
+{% else %}
+    welocome to shopper stop
+        see our collections
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if Category %}
+<div xmlns="http://www.w3.org/1999/html">
+    <div class="row my_row_class">
+        <div class="mx_auto">
+        <p><a href="{% url 'Ecartshop:AllProductcat' %}">our product collection</a></p>
+
+    </div>
+    </div>
+</div>
+{% endif %}
+<div class="mx_auto">
+    {% if Category %}
+    <div class="container">
+    <img class="my_image" src="{{Category.image.url}}" alt="{{Category.name}}" width="1080" height="360">
+        </div>
+</div>
+<br>
+
+<div>
+    <h1 class="text-center my_title">{{Category.name}}</h1>
+    <center><p class="text-justify">{{Category.desc}}</p></center>
+
+</div>
+{% else %}
+<div  class="container">
+    <img  src="{% static 'img/el1 (4).png' %}" alt="image" width="200px" height="200px">&nbsp;&nbsp;
+    <img  src="{% static 'img/download2.png' %}" alt="image" width="200px" height="200px">
+</div>
+<br>
+<div>
+    <h1 class="text-center">our product collection</h1>
+    <p class="text-center">    What are features and benefits? Think about what gets you excited about your product that makes it
+        different from your competitors’ products. It might be careful construction, ethically sourced materials,
+        or all the bells and whistles you dreamed up over drinks one night.</p>
+</div>
+{% endif %}
+<div class="container">
+    <div class="row mx_auto">
+        {% for Products in Product.object_list %}<br>
+        <div class="my_bottom_margin col-9 col-sm-12 col-md-4 col-md-4">
+            <div class="card text-center" style="min-width:18rem;">
+                <a href="{{Products.get_url}}"> <img class="card-img-top" src="{{Products.image.url}}"alt="{{Product.name}}"  width="250" height="250"> </a>
+                <div class="card-body">
+                    <h4>{{Products.name}}</h4>
+                    <p style="color:red;">₹:{{Products.price}}</p>
+                </div>
+            </div>
+            <br>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="mx_auto">
+        {% if Product.paginator.num_pages > 1 %}
+             <hr>
+             <div class="text-center">
+                 {% for pg in Product.paginator.page_range %}
+                 <a href="?page={{pg}}" class="btn btn-secondary btn-sm  {% if Product.number == pg %} active {% endif %}">{{pg}}</a>
+                 {% endfor %}
+    </div>
+        {% endif %}
+</div>
+    <br>
+    {% endblock %}
+</div>
+

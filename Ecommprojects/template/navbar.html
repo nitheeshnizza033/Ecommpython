@@ -1,0 +1,49 @@
+{% load static %}
+
+
+<nav  style="background-color:#D2B4fE;" class="navbar navbar-expand-lg ">
+  <div class="container-fluid">
+
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'Ecartshop:AllProductcat' %}">Home</a>
+        </li>
+        <li class="nav-item dropdown {% if 'Ecartshop' in request.path %}active {% endif %}">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Select Items
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'Ecartshop:AllProductcat' %}">All Products</a></li>
+             {% for Cat in links %}
+            <li><a class=" dropdown-item" href="{{Cat.get_url}}">{{Cat.name}}</a>
+            </li>
+            {% endfor %}
+
+            <li class="nav-item">
+            </li>
+
+          </ul>
+        </li>
+
+      </ul>
+      {% if item_count > 0 %}
+
+        &nbsp;<a href="{% url 'cart:cart_detail' %}"><img src="{% static 'img/cart.png' %}" width="40" height="40">({{item_count}})</a>
+        &nbsp;&nbsp;
+        {% endif %}
+
+      <form class="d-flex " action="{% url 'search_app:searchresult' %}" method="get">
+        {% csrf_token %}
+        &nbsp;
+        <br>
+        <input  class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+
+      </form>
+
+    </div>
+  </div>
+</nav>
